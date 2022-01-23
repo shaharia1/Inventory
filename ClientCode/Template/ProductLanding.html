@@ -1,0 +1,106 @@
+﻿<style>
+    .add{
+        margin-top:30px;
+    }
+</style>
+<div ng-controller="product">
+
+    <div class="landing" ng-show="!IsVisible">
+        <div class="row">
+            <div class="col-md-6">
+                <h3>Product List</h3>
+            </div>
+            <div class="col-md-6" style="text-align:right;margin-top:20px">
+                <label for="fname">Search:</label>
+                <input ng-model="search" type="text" id="fname" name="fname">
+                <button type="button" ng-click="ShowHide()">Add New Product</button>
+            </div>
+
+        </div>
+        <table class="table-responsive" style="width:100%;margin-top:20px;">
+            <thead>
+                <tr>
+                    <th>Sl</th>
+                    <th>Product Code</th>
+                    <th>Product Name</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Type</th>
+                    <th>Expiry Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr dir-paginate="product in products | filter:search |itemsPerPage:5">
+                    <td>{{$index+1}}</td>
+                    <td>{{product.ProductCode}}</td>
+                    <td>{{product.ProductName}}</td>
+                    <td>{{product.Description}}</td>
+                    <td>{{product.Price}}</td>
+                    <td>{{TypeString(product.TypeId)}}</td>
+                    <td>{{ToJavaScriptDate(product.ExpiryDate)}}</td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+        <dir-pagination-controls max-size="5"
+                                 direction-links="true"
+                                 boundary-links="true">
+        </dir-pagination-controls>
+    </div>
+    <!--ng-show="IsVisible"-->
+    <div class="add" ng-show="IsVisible">
+        <div style="margin-top:10px;margin-bottom:10px;">
+            <button type="button" ng-click="clear()">New</button>
+        </div>
+        
+        <div class="card">
+
+
+            <div class="row">
+                <div class="col-md-4">
+                    <label for="fname">Product Code*</label>
+                    <input ng-model="code" type="text" id="fname" name="fname" style=" margin-left: 5px;">
+                </div>
+                <div class="col-md-4">
+                    <label for="fname">Product Name*</label>
+                    <input ng-model="name" type="text" id="fname" name="fname">
+                </div>
+                <div class="col-md-4">
+                    <label for="fname">Type</label>
+                    <select ng-model="type" name="type" id="type" style=" margin-left: 67px; width: 26%;">
+                        <option value="1">Local</option>
+                        <option value="2">Imported</option>
+                    </select>
+                </div>
+
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-4">
+                    <label for="fname">Price*</label>
+                    <input ng-model="price" type="text" id="fname" name="fname" style=" margin-left: 60px;">
+                </div>
+                
+                <div class="col-md-4">
+                    <label for="fname">Expiry Date</label>
+                    <input  ng-model="expiryDate" type="date" id="myDate" name="fname" style=" margin-left: 20px;">
+                </div>
+                <div class="col-md-4">
+                    <label style=" margin-top: 10px;" for="fname">Description</label>
+                    <textarea ng-model="description" style=" margin-left: 22px;"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-top:10px;margin-bottom:10px;">
+            <button type="submit" ng-click="save()">Save</button>
+            <button type="button" ng-click="Back()">Back</button>
+            
+            
+        </div>
+        
+
+    </div>
+</div>
